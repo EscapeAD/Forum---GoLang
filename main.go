@@ -7,11 +7,13 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+
+	_ "github.com/lib/pq"
 )
 
 type message struct {
-	User    string
-	Message string
+	User    string `json:"user"`
+	Message string `json:"message"`
 }
 
 func home(w http.ResponseWriter, req *http.Request) {
@@ -44,7 +46,12 @@ func fp(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println(data)
+}
+
+func init() {
+
 }
 
 func main() {
