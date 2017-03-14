@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -10,6 +11,19 @@ import (
 
 	_ "github.com/lib/pq"
 )
+
+func init() {
+	// initate DB
+	db, err := sql.Open("postgres", "postgres://fowner:pass0@localhost/forum?sslmode=disable")
+	if err != nil {
+		panic(err)
+	}
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("connected to Database")
+}
 
 type message struct {
 	User    string `json:"user"`
@@ -48,10 +62,6 @@ func fp(w http.ResponseWriter, req *http.Request) {
 	}
 
 	fmt.Println(data)
-}
-
-func init() {
-
 }
 
 func main() {
