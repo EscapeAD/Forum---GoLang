@@ -2,7 +2,9 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -13,7 +15,7 @@ type message struct {
 }
 
 func home(w http.ResponseWriter, req *http.Request) {
-	// Set template here
+	// Set template here for index or seperate?
 	io.WriteString(w, "Home")
 }
 func forum(w http.ResponseWriter, req *http.Request) {
@@ -29,9 +31,25 @@ func forum(w http.ResponseWriter, req *http.Request) {
 	}
 	w.Write(json)
 }
+func fp(w http.ResponseWriter, req *http.Request) {
+	// post data - conver json to go
+	var data message
+	// json to []byte
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		panic(err)
+	}
+	// decode json
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(data)
+}
 
 func main() {
 	http.HandleFunc("/", home)
-	http.HandleFunc("/api/", forum)
+	http.HandleFunc("/api/forum", forum)
+	http.HandleFunc("/api/forum/new", fp)
 	http.ListenAndServe(":8080", nil)
 }
