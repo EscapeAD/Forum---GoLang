@@ -26,6 +26,7 @@ func init() {
 }
 
 type message struct {
+	ID      int    `json:"id"`
 	User    string `json:"user"`
 	Message string `json:"message"`
 }
@@ -38,6 +39,7 @@ func forum(w http.ResponseWriter, req *http.Request) {
 	// response json
 	w.Header().Set("Content-Type", "application/json")
 	msg := message{
+		ID:      1,
 		User:    "HitchHiker",
 		Message: "Awnser to Life is 42",
 	}
