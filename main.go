@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 )
 
@@ -16,7 +18,16 @@ func home(w http.ResponseWriter, req *http.Request) {
 }
 func forum(w http.ResponseWriter, req *http.Request) {
 	// response json
-
+	w.Header().Set("Content-Type", "application/json")
+	msg := message{
+		User:    "HitchHiker",
+		Message: "Awnser to Life is 42",
+	}
+	json, err := json.Marshal(msg)
+	if err != nil {
+		log.Println(err)
+	}
+	w.Write(json)
 }
 
 func main() {
