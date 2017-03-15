@@ -55,8 +55,17 @@ func forum(w http.ResponseWriter, req *http.Request) {
 	}
 	defer rows.Close()
 
-	fmt.Println(rows)
-	json, err := json.Marshal(rows)
+	msgs := make([]message, 0)
+	for rows.Next() {
+		msg := message{}
+		err := rows.Scan(&msg.ID, &msg.Username, &msg.Message)
+		if err != nil {
+			log.Println(err)
+		}
+		msgs = append(msgs, msg)
+	}
+
+	json, err := json.Marshal(msgs)
 	if err != nil {
 		log.Println(err)
 	}
