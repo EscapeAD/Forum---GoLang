@@ -36,15 +36,15 @@ type message struct {
 }
 type comment struct {
 	ID        int    `json:"id"`
-	Messageid int    `json:"message_id"`
+	MessageID int    `json:"message_id"`
 	Username  string `json:"username"`
 	Message   string `json:"message"`
 	Created   string `json:"created_at"`
 }
 type reply struct {
 	ID        int    `json:"id"`
-	Messageid int    `json:"message_id"`
-	Commentid int    `json:"comment_id"`
+	MessageID int    `json:"message_id"`
+	CommentID int    `json:"comment_id"`
 	Username  string `json:"username"`
 	Message   string `json:"message"`
 	Created   string `json:"created_at"`
@@ -59,8 +59,8 @@ func main() {
 	http.HandleFunc("/", home)
 	http.HandleFunc("/api/forum", forum)
 	http.HandleFunc("/api/forum/messages", fp)
-	// http.HandleFunc("/api/forum/messages/comments", cp)
-	// http.HandleFunc("/api/forum/messages/comments/replies", rp)
+	http.HandleFunc("/api/forum/messages/comments", cp)
+	http.HandleFunc("/api/forum/messages/comments/replies", rp)
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -95,7 +95,7 @@ func forum(w http.ResponseWriter, req *http.Request) {
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&comments.ID, &comments.Messageid, &comments.Username, &comments.Message, &comments.Created)
+		err = rows.Scan(&comments.ID, &comments.MessageID, &comments.Username, &comments.Message, &comments.Created)
 		if err != nil {
 			panic(err)
 		}
@@ -106,13 +106,14 @@ func forum(w http.ResponseWriter, req *http.Request) {
 		panic(err)
 	}
 	defer rows.Close()
-
 	for rows.Next() {
-		err = rows.Scan(&replies.ID, &replies.Messageid, &replies.Commentid, &replies.Username, &replies.Message, &replies.Created)
+
+		err = rows.Scan(&replies.ID, &replies.MessageID, &replies.CommentID, &replies.Username, &replies.Message, &replies.Created)
 		if err != nil {
 			panic(err)
 		}
 	}
+
 	posts := post{messages, comments, replies}
 	// Convert to json
 	json, err := json.Marshal(posts)
@@ -142,6 +143,61 @@ func fp(w http.ResponseWriter, req *http.Request) {
 
 	// Post data to DB
 	_, err = db.Exec("INSERT INTO messages (USERNAME, MESSAGE) VALUES ($1, $2)", msg.Username, msg.Message)
+	if err != nil {
+		panic(err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+}
+func cp(w http.ResponseWriter, req *http.Request) {
+	// post data - convert json to go
+	var data comment
+	// json to []byte
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		panic(err)
+	}
+	// decode json
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		panic(err)
+	}
+
+	comments := comment{}
+	comments.MessageID = data.MessageID
+	comments.Username = data.Username
+	comments.Message = data.Message
+
+	// Post data to DB
+	_, err = db.Exec("INSERT INTO comments (MESSAGE_ID,USERNAME, MESSAGE) VALUES ($1, $2, $3)", comments.MessageID, comments.Username, comments.Message)
+	if err != nil {
+		panic(err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+}
+func rp(w http.ResponseWriter, req *http.Request) {
+	// post data - convert json to go
+	var data reply
+	// json to []byte
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		panic(err)
+	}
+	// decode json
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		panic(err)
+	}
+
+	replies := reply{}
+	replies.Username = data.Username
+	replies.Message = data.Message
+	replies.MessageID = data.MessageID
+	replies.CommentID = data.CommentID
+
+	// Post data to DB
+	_, err = db.Exec("INSERT INTO replies (COMMENT_ID, MESSAGE_ID,USERNAME, MESSAGE) VALUES ($1, $2, $3, $4)", replies.CommentID, replies.MessageID, replies.Username, replies.Message)
 	if err != nil {
 		panic(err)
 	}
