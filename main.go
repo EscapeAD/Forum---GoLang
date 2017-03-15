@@ -33,6 +33,19 @@ type message struct {
 	Username string `json:"username"`
 	Message  string `json:"message"`
 }
+type comments struct {
+	ID        int    `json:"id"`
+	Messageid int    `json:"message_id"`
+	Username  string `json:"username"`
+	Message   string `json:"message"`
+}
+type replies struct {
+	ID        int    `json:"id"`
+	Messageid int    `json:"message_id"`
+	Commentid int    `json:"comment_id"`
+	Username  string `json:"username"`
+	Message   string `json:"message"`
+}
 
 func main() {
 	http.HandleFunc("/", home)
