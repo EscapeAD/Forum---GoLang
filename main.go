@@ -58,7 +58,7 @@ func forum(w http.ResponseWriter, req *http.Request) {
 	msgs := make([]message, 0)
 	for rows.Next() {
 		msg := message{}
-		err := rows.Scan(&msg.ID, &msg.Username, &msg.Message)
+		err = rows.Scan(&msg.ID, &msg.Username, &msg.Message)
 		if err != nil {
 			log.Println(err)
 		}
@@ -95,4 +95,6 @@ func fp(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		panic(err)
 	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
 }
