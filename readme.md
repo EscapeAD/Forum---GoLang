@@ -44,5 +44,6 @@ CREATE TABLE replies (
 
 Minor notes:
 ```
-
+GRANT ALL PRIVILEGES ON replies TO fowner;
+GRANT ALL ON SEQUENCE comments_id_seq TO fowner;
 ```

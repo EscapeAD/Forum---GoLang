@@ -69,6 +69,9 @@ func home(w http.ResponseWriter, req *http.Request) {
 	io.WriteString(w, "Home")
 }
 func forum(w http.ResponseWriter, req *http.Request) {
+	replies := reply{}
+	messages := message{}
+	comments := comment{}
 	// response json
 	w.Header().Set("Content-Type", "application/json")
 	// Pull data from DB
@@ -78,18 +81,41 @@ func forum(w http.ResponseWriter, req *http.Request) {
 	}
 	defer rows.Close()
 
-	msgs := make([]message, 0)
 	for rows.Next() {
-		msg := message{}
-		err = rows.Scan(&msg.ID, &msg.Username, &msg.Message, &msg.Created)
+		err = rows.Scan(&messages.ID, &messages.Username, &messages.Message, &messages.Created)
 		if err != nil {
-			log.Println(err)
+			panic(err)
 		}
-		msgs = append(msgs, msg)
 	}
+	// Pull data from Comment
+	rows, err = db.Query("SELECT * from comments")
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
 
+	for rows.Next() {
+		err = rows.Scan(&comments.ID, &comments.Messageid, &comments.Username, &comments.Message, &comments.Created)
+		if err != nil {
+			panic(err)
+		}
+	}
+	// Pull data from Replies
+	rows, err = db.Query("SELECT * from replies")
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&replies.ID, &replies.Messageid, &replies.Commentid, &replies.Username, &replies.Message, &replies.Created)
+		if err != nil {
+			panic(err)
+		}
+	}
+	posts := post{messages, comments, replies}
 	// Convert to json
-	json, err := json.Marshal(msgs)
+	json, err := json.Marshal(posts)
 	if err != nil {
 		log.Println(err)
 	}
