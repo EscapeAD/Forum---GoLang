@@ -12,9 +12,12 @@ import (
 	_ "github.com/lib/pq"
 )
 
+var db *sql.DB
+
 func init() {
 	// initate DB
-	db, err := sql.Open("postgres", "postgres://fowner:pass0@localhost/forum?sslmode=disable")
+	var err error
+	db, err = sql.Open("postgres", "postgres://fowner:pass0@localhost/forum?sslmode=disable")
 	if err != nil {
 		panic(err)
 	}
@@ -26,9 +29,16 @@ func init() {
 }
 
 type message struct {
-	ID      int    `json:"id"`
-	User    string `json:"user"`
-	Message string `json:"message"`
+	ID       int    `json:"id"`
+	Username string `json:"username"`
+	Message  string `json:"message"`
+}
+
+func main() {
+	http.HandleFunc("/", home)
+	http.HandleFunc("/api/forum", forum)
+	http.HandleFunc("/api/forum/new", fp)
+	http.ListenAndServe(":8080", nil)
 }
 
 func home(w http.ResponseWriter, req *http.Request) {
@@ -38,12 +48,15 @@ func home(w http.ResponseWriter, req *http.Request) {
 func forum(w http.ResponseWriter, req *http.Request) {
 	// response json
 	w.Header().Set("Content-Type", "application/json")
-	msg := message{
-		ID:      1,
-		User:    "HitchHiker",
-		Message: "Awnser to Life is 42",
+	// Pull data from DB
+	rows, err := db.Query("SELECT * from messages")
+	if err != nil {
+		panic(err)
 	}
-	json, err := json.Marshal(msg)
+	defer rows.Close()
+
+	fmt.Println(rows)
+	json, err := json.Marshal(rows)
 	if err != nil {
 		log.Println(err)
 	}
@@ -64,11 +77,4 @@ func fp(w http.ResponseWriter, req *http.Request) {
 	}
 
 	fmt.Println(data)
-}
-
-func main() {
-	http.HandleFunc("/", home)
-	http.HandleFunc("/api/forum", forum)
-	http.HandleFunc("/api/forum/new", fp)
-	http.ListenAndServe(":8080", nil)
 }
