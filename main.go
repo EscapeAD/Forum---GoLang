@@ -72,7 +72,7 @@ func forum(w http.ResponseWriter, req *http.Request) {
 	w.Write(json)
 }
 func fp(w http.ResponseWriter, req *http.Request) {
-	// post data - conver json to go
+	// post data - convert json to go
 	var data message
 	// json to []byte
 	body, err := ioutil.ReadAll(req.Body)
@@ -85,5 +85,14 @@ func fp(w http.ResponseWriter, req *http.Request) {
 		panic(err)
 	}
 
-	fmt.Println(data)
+	msg := message{}
+	msg.Username = data.Username
+	msg.Message = data.Message
+	fmt.Println(msg)
+
+	// Post data to DB
+	_, err = db.Exec("INSERT INTO messages (USERNAME, MESSAGE) VALUES ($1, $2)", msg.Username, msg.Message)
+	if err != nil {
+		panic(err)
+	}
 }
