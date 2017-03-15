@@ -50,9 +50,9 @@ type reply struct {
 	Created   string `json:"created_at"`
 }
 type post struct {
-	Messages message
-	Comments comment
-	Replies  reply
+	Messages []message
+	Comments []comment
+	Replies  []reply
 }
 
 func main() {
@@ -69,9 +69,9 @@ func home(w http.ResponseWriter, req *http.Request) {
 	io.WriteString(w, "Home")
 }
 func forum(w http.ResponseWriter, req *http.Request) {
-	replies := reply{}
-	messages := message{}
-	comments := comment{}
+	replies := make([]reply, 0)
+	messages := make([]message, 0)
+	comments := make([]comment, 0)
 	// response json
 	w.Header().Set("Content-Type", "application/json")
 	// Pull data from DB
@@ -82,10 +82,12 @@ func forum(w http.ResponseWriter, req *http.Request) {
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&messages.ID, &messages.Username, &messages.Message, &messages.Created)
+		m := message{}
+		err = rows.Scan(&m.ID, &m.Username, &m.Message, &m.Created)
 		if err != nil {
 			panic(err)
 		}
+		messages = append(messages, m)
 	}
 	// Pull data from Comment
 	rows, err = db.Query("SELECT * from comments")
@@ -95,10 +97,12 @@ func forum(w http.ResponseWriter, req *http.Request) {
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&comments.ID, &comments.MessageID, &comments.Username, &comments.Message, &comments.Created)
+		c := comment{}
+		err = rows.Scan(&c.ID, &c.MessageID, &c.Username, &c.Message, &c.Created)
 		if err != nil {
 			panic(err)
 		}
+		comments = append(comments, c)
 	}
 	// Pull data from Replies
 	rows, err = db.Query("SELECT * from replies")
@@ -107,11 +111,12 @@ func forum(w http.ResponseWriter, req *http.Request) {
 	}
 	defer rows.Close()
 	for rows.Next() {
-
-		err = rows.Scan(&replies.ID, &replies.MessageID, &replies.CommentID, &replies.Username, &replies.Message, &replies.Created)
+		r := reply{}
+		err = rows.Scan(&r.ID, &r.MessageID, &r.CommentID, &r.Username, &r.Message, &r.Created)
 		if err != nil {
 			panic(err)
 		}
+		replies = append(replies, r)
 	}
 
 	posts := post{messages, comments, replies}
