@@ -15,7 +15,8 @@ Adam Tse
 CREATE TABLE messages (
  ID                 SERIAL      PRIMARY KEY         NOT NULL,
  USERNAME           TEXT                            NOT NULL,
- MESSAGE            VARCHAR(250)                    NOT NULL
+ MESSAGE            VARCHAR(250)                    NOT NULL,
+ CREATED_AT         TIMESTAMP                       DEFAULT NOW()
 );
 ```
 ### Comments
@@ -24,7 +25,8 @@ CREATE TABLE comments (
  ID                 SERIAL      PRIMARY KEY         NOT NULL,
  MESSAGE_ID         INT                             references messages(ID),
  USERNAME           TEXT                            NOT NULL,
- MESSAGE            VARCHAR(250)                    NOT NULL
+ MESSAGE            VARCHAR(250)                    NOT NULL,
+ CREATED_AT         TIMESTAMP                       DEFAULT NOW()
 );
 ```
 
@@ -35,6 +37,12 @@ CREATE TABLE replies (
  MESSAGE_ID         INT                             references messages(ID),
  COMMENT_ID         INT                             references comments(ID),
  USERNAME           TEXT                            NOT NULL,
- MESSAGE            VARCHAR(250)                    NOT NULL
+ MESSAGE            VARCHAR(250)                    NOT NULL,
+ CREATED_AT         TIMESTAMP                       DEFAULT NOW()
 );
+```
+
+Minor notes:
+```
+
 ```

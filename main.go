@@ -32,12 +32,14 @@ type message struct {
 	ID       int    `json:"id"`
 	Username string `json:"username"`
 	Message  string `json:"message"`
+	Created  string `json:"created_at"`
 }
 type comment struct {
 	ID        int    `json:"id"`
 	Messageid int    `json:"message_id"`
 	Username  string `json:"username"`
 	Message   string `json:"message"`
+	Created   string `json:"created_at"`
 }
 type reply struct {
 	ID        int    `json:"id"`
@@ -45,6 +47,7 @@ type reply struct {
 	Commentid int    `json:"comment_id"`
 	Username  string `json:"username"`
 	Message   string `json:"message"`
+	Created   string `json:"created_at"`
 }
 type post struct {
 	Messages message
@@ -78,13 +81,14 @@ func forum(w http.ResponseWriter, req *http.Request) {
 	msgs := make([]message, 0)
 	for rows.Next() {
 		msg := message{}
-		err = rows.Scan(&msg.ID, &msg.Username, &msg.Message)
+		err = rows.Scan(&msg.ID, &msg.Username, &msg.Message, &msg.Created)
 		if err != nil {
 			log.Println(err)
 		}
 		msgs = append(msgs, msg)
 	}
 
+	// Convert to json
 	json, err := json.Marshal(msgs)
 	if err != nil {
 		log.Println(err)
