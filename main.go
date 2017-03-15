@@ -33,24 +33,31 @@ type message struct {
 	Username string `json:"username"`
 	Message  string `json:"message"`
 }
-type comments struct {
+type comment struct {
 	ID        int    `json:"id"`
 	Messageid int    `json:"message_id"`
 	Username  string `json:"username"`
 	Message   string `json:"message"`
 }
-type replies struct {
+type reply struct {
 	ID        int    `json:"id"`
 	Messageid int    `json:"message_id"`
 	Commentid int    `json:"comment_id"`
 	Username  string `json:"username"`
 	Message   string `json:"message"`
 }
+type post struct {
+	Messages message
+	Comments comment
+	Replies  reply
+}
 
 func main() {
 	http.HandleFunc("/", home)
 	http.HandleFunc("/api/forum", forum)
-	http.HandleFunc("/api/forum/new", fp)
+	http.HandleFunc("/api/forum/messages", fp)
+	// http.HandleFunc("/api/forum/messages/comments", cp)
+	// http.HandleFunc("/api/forum/messages/comments/replies", rp)
 	http.ListenAndServe(":8080", nil)
 }
 
