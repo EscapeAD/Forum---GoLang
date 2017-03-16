@@ -45,7 +45,7 @@ class Respond extends Component {
   render() {
     return (
       <span>
-        <Button size="sm" color="secondary" onClick={this.toggle}>Reply</Button>
+        <Button outline size="sm" color="secondary" onClick={this.toggle}>Reply</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
         <Form onSubmit={this.handleSubmit.bind(this)}>
           <ModalBody>
