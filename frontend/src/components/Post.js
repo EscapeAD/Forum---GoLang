@@ -34,7 +34,8 @@ class Post extends Component {
   render() {
     return (
       <div>
-      <Jumbotron>
+      <Jumbotron fluid>
+        <div className='container'>
         <h1 className="display-3">Nav-eddit</h1>
         <p className="lead">Simple yet not so simple web forum.</p>
         <hr className="my-2" />
@@ -42,6 +43,7 @@ class Post extends Component {
         <p className="lead">
           <Button onClick={this.toggle} color="primary">Create a Post</Button>
         </p>
+        </div>
       </Jumbotron>
       <Modal isOpen={this.state.modal} toggle={this.toggle}>
       <Form onSubmit={this.handleSubmit.bind(this)}>
