@@ -23,13 +23,24 @@ class Respond extends Component {
 
   handleSubmit(event){
     event.preventDefault()
-    this.setState({
+    let comment = {
       newMessage:{
         message_id: this.props.message_id,
         username: event.target.username.value,
-        message:  event.target.message.value
+        message:  event.target.message.value,
       }
-    },()=>{
+    }
+    let reply = {
+      newMessage:{
+        message_id: this.props.message_id,
+        username: event.target.username.value,
+        message:  event.target.message.value,
+        comment_id: this.props.comment_id
+      }
+    }
+    let state = this.props.comment_id ? reply : comment
+
+    this.setState(state,()=>{
       this.props.postResponse(this.state.newMessage)
       this.toggle()
     })
