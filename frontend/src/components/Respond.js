@@ -6,7 +6,8 @@ class Respond extends Component {
   constructor(props) {
   super(props);
   this.state = {
-    modal: false
+    modal: false,
+    newMessage: {}
   };
   this.toggle = this.toggle.bind(this);
   }
@@ -19,21 +20,30 @@ class Respond extends Component {
   checkInfo(){
 
   }
+
   handleSubmit(event){
     event.preventDefault()
-    console.log('Connected')
+    this.setState({
+      newMessage:{
+        message_id: this.props.message_id,
+        username: event.target.username.value,
+        message:  event.target.message.value
+      }
+    },()=>{
+      console.log(this.state.newMessage)
+    })
   }
 
   render() {
     return (
       <span>
-        <Button color="danger" onClick={this.toggle}>Reply</Button>
+        <Button size="sm" color="secondary" onClick={this.toggle}>Reply</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
         <Form onSubmit={this.handleSubmit.bind(this)}>
           <ModalBody>
                  <FormGroup>
                    <Label for="username">Username</Label>
-                   <Input type="text" name='username' id="username" placeholder="John Doe" required/>
+                   <Input type="text" name='username' id="username" placeholder="I am batman" required/>
                  </FormGroup>
                  <FormGroup>
                    <Label for="message">Post</Label>
