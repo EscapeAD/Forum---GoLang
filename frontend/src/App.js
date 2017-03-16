@@ -61,7 +61,7 @@ class App extends Component {
       <div className="App">
       <Navbar></Navbar>
       <Post postMessage={this.postMessage.bind(this)}></Post>
-      <div className='container bg-faded'>
+      <div className='container'>
       <Message postResponse={this.postResponse.bind(this)} state={this.state}></Message>
       </div>
       </div>

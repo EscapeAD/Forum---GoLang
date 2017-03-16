@@ -45,9 +45,10 @@ class Respond extends Component {
   render() {
     return (
       <span>
-        <Button outline size="sm" color="secondary" onClick={this.toggle}>Reply</Button>
+        <Button size="sm" color="secondary" onClick={this.toggle}>Reply</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
         <Form onSubmit={this.handleSubmit.bind(this)}>
+        <ModalHeader>Reply</ModalHeader>
           <ModalBody>
                  <FormGroup>
                    <Label for="username">Username</Label>
@@ -59,8 +60,8 @@ class Respond extends Component {
                  </FormGroup>
           </ModalBody>
           <ModalFooter>
-            <input type='submit' className='btn btn-success' value='submit' />
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+            <input type='submit' className='btn btn-outline-primary' value='submit' />
+            <Button outline color="warning" onClick={this.toggle}>Cancel</Button>
           </ModalFooter>
           </Form>
         </Modal>
