@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Form, FormGroup, Label, Input } from 'reactstrap';
 
 class Post extends Component {
+
+  handleSubmit(event){
+    event.preventDefault()
+    console.log("connected")
+  }
+
   render() {
     return (
-      <Form className='NewPost'>
+      <Form className='NewPost' onSubmit={this.handleSubmit.bind(this)}>
              <FormGroup>
                <Label for="username">Username</Label>
                <Input type="text" name='username' id="username" placeholder="John Doe" required/>
