@@ -139,25 +139,31 @@ func fp(w http.ResponseWriter, req *http.Request) {
 	// json to []byte
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		http.Error(w, http.StatusText(500)+" Issue with Reading Request", http.StatusInternalServerError)
+		return
 	}
 	// decode json
 	err = json.Unmarshal(body, &data)
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		http.Error(w, http.StatusText(500)+" Issue with Parsing Json", http.StatusInternalServerError)
+		return
 	}
 
 	msg := message{}
 	msg.Username = data.Username
 	msg.Message = data.Message
-	fmt.Println(msg)
 
 	// Post data to DB
 	_, err = db.Exec("INSERT INTO messages (USERNAME, MESSAGE) VALUES ($1, $2)", msg.Username, msg.Message)
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		http.Error(w, http.StatusText(500)+" Issue with Posting Request", http.StatusInternalServerError)
+		return
 	}
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.WriteHeader(http.StatusCreated)
 }
 func cp(w http.ResponseWriter, req *http.Request) {
@@ -166,12 +172,16 @@ func cp(w http.ResponseWriter, req *http.Request) {
 	// json to []byte
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		http.Error(w, http.StatusText(500)+" Issue with Reading Request", http.StatusInternalServerError)
+		return
 	}
 	// decode json
 	err = json.Unmarshal(body, &data)
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		http.Error(w, http.StatusText(500)+" Issue with Parsing Json", http.StatusInternalServerError)
+		return
 	}
 
 	comments := comment{}
@@ -182,9 +192,12 @@ func cp(w http.ResponseWriter, req *http.Request) {
 	// Post data to DB
 	_, err = db.Exec("INSERT INTO comments (MESSAGE_ID,USERNAME, MESSAGE) VALUES ($1, $2, $3)", comments.MessageID, comments.Username, comments.Message)
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		http.Error(w, http.StatusText(500)+" Issue with Posting Request", http.StatusInternalServerError)
+		return
 	}
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.WriteHeader(http.StatusCreated)
 }
 func rp(w http.ResponseWriter, req *http.Request) {
@@ -193,12 +206,16 @@ func rp(w http.ResponseWriter, req *http.Request) {
 	// json to []byte
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		http.Error(w, http.StatusText(500)+" Issue with Reading Request", http.StatusInternalServerError)
+		return
 	}
 	// decode json
 	err = json.Unmarshal(body, &data)
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		http.Error(w, http.StatusText(500)+" Issue with Parsing Json", http.StatusInternalServerError)
+		return
 	}
 
 	replies := reply{}
@@ -210,8 +227,11 @@ func rp(w http.ResponseWriter, req *http.Request) {
 	// Post data to DB
 	_, err = db.Exec("INSERT INTO replies (COMMENT_ID, MESSAGE_ID,USERNAME, MESSAGE) VALUES ($1, $2, $3, $4)", replies.CommentID, replies.MessageID, replies.Username, replies.Message)
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		http.Error(w, http.StatusText(500)+" Issue with Posting Request", http.StatusInternalServerError)
+		return
 	}
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.WriteHeader(http.StatusCreated)
 }
