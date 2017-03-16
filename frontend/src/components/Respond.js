@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class Respond extends Component {
   constructor(props) {
@@ -16,9 +15,6 @@ class Respond extends Component {
     this.setState({
       modal: !this.state.modal
     });
-  }
-  checkInfo(){
-
   }
 
   handleSubmit(event){
@@ -59,7 +55,7 @@ class Respond extends Component {
                  </FormGroup>
                  <FormGroup>
                    <Label for="message">Post</Label>
-                   <Input type="textarea" name='messsage' id="message" required />
+                   <Input maxlength="250" type="textarea" name='messsage' id="message" required />
                  </FormGroup>
           </ModalBody>
           <ModalFooter>
