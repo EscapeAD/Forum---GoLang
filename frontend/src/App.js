@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Navbar from './components/Navbar';
-import Axios  from  'axios';
+import Navbar               from './components/Navbar';
+import Message              from './components/Message';
+import Axios                from  'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
@@ -18,13 +19,12 @@ class App extends Component {
   getForum(){
     Axios.get('http://localhost:8080/api/forum')
          .then(response =>{
-           console.log(response.data)
            this.setState({messages: response.data.messages})
            this.setState({comments: response.data.comments})
            this.setState({replies:  response.data.replies})
          })
-         console.log(this.state)
   }
+
   componentWillMount(){
     this.getForum()
   }
@@ -35,6 +35,7 @@ class App extends Component {
       <Navbar></Navbar>
       <div className='container'>
       <h1> Top of Bar</h1>
+      <Message></Message>
       </div>
       </div>
     );
