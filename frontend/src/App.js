@@ -6,11 +6,24 @@ import './App.css';
 
 class App extends Component {
 
+  constructor(){
+    super()
+    this.state = {
+      messages: [],
+      comments: [],
+      replies:  []
+    }
+  }
+
   getForum(){
     Axios.get('http://localhost:8080/api/forum')
-         .then(data =>{
-           console.log(data)
+         .then(response =>{
+           console.log(response.data)
+           this.setState({messages: response.data.messages})
+           this.setState({comments: response.data.comments})
+           this.setState({replies:  response.data.replies})
          })
+         console.log(this.state)
   }
   componentWillMount(){
     this.getForum()
@@ -20,6 +33,9 @@ class App extends Component {
     return (
       <div className="App">
       <Navbar></Navbar>
+      <div className='container'>
+      <h1> Top of Bar</h1>
+      </div>
       </div>
     );
   }
