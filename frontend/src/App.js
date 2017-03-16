@@ -21,6 +21,7 @@ class App extends Component {
     Axios.post('http://localhost:8080/api/forum/messages', JSON.stringify(data))
          .then(response =>{
            console.log(response)
+           this.getForum()
          })
          .catch(error=>{
            console.log(error)
