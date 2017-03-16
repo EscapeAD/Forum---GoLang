@@ -89,6 +89,11 @@ func forum(w http.ResponseWriter, req *http.Request) {
 		}
 		messages = append(messages, m)
 	}
+	for i := len(messages)/2 - 1; i >= 0; i-- {
+		opp := len(messages) - 1 - i
+		messages[i], messages[opp] = messages[opp], messages[i]
+	}
+
 	// Pull data from Comment
 	rows, err = db.Query("SELECT * from comments")
 	if err != nil {
