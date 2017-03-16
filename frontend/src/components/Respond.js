@@ -30,7 +30,8 @@ class Respond extends Component {
         message:  event.target.message.value
       }
     },()=>{
-      console.log(this.state.newMessage)
+      this.props.postResponse(this.state.newMessage)
+      this.toggle()
     })
   }
 

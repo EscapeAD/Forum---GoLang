@@ -28,6 +28,18 @@ class App extends Component {
          })
   }
 
+  postResponse(data){
+    let address = data.comment_id ? 'http://localhost:8080/api/forum/messages/comments/replies' : 'http://localhost:8080/api/forum/messages/comments';
+    Axios.post(address, JSON.stringify(data))
+         .then(response =>{
+           console.log(response);
+         })
+         .catch(error=>{
+           console.log(error)
+         })
+         this.getForum();
+  }
+
   getForum(){
     Axios.get('http://localhost:8080/api/forum')
          .then(response =>{
@@ -51,7 +63,7 @@ class App extends Component {
       <div className='container'>
       <h1> Top of Bar</h1>
       <Post postMessage={this.postMessage.bind(this)}></Post>
-      <Message state={this.state}></Message>
+      <Message postResponse={this.postResponse.bind(this)} state={this.state}></Message>
       </div>
       </div>
     );
