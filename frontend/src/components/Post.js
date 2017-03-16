@@ -2,10 +2,23 @@ import React, { Component } from 'react';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 
 class Post extends Component {
-
+  constructor(){
+    super();
+    this.state = {
+      newMessage:{}
+    }
+  }
   handleSubmit(event){
     event.preventDefault()
-    console.log("connected")
+    this.setState({
+      newMessage:{
+        username: event.target.username.value,
+        message:  event.target.message.value
+      }
+    },()=>{
+      console.log(this.state)
+      console.log("push to main")
+    })
   }
 
   render() {
