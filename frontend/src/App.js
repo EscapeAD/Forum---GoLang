@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar               from './components/Navbar';
 import Message              from './components/Message';
 import Post                 from './components/Post';
+import Jumbo                from './components/Jumbo';
 import Axios                from  'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
@@ -61,7 +62,7 @@ class App extends Component {
       <div className="App">
       <Navbar></Navbar>
       <div className='container'>
-      <h1> Top of Bar</h1>
+      <Jumbo></Jumbo>
       <Post postMessage={this.postMessage.bind(this)}></Post>
       <Message postResponse={this.postResponse.bind(this)} state={this.state}></Message>
       </div>
