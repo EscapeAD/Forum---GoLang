@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navbar               from './components/Navbar';
 import Message              from './components/Message';
+import Post                 from './components/Post';
 import Axios                from  'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
@@ -35,6 +36,7 @@ class App extends Component {
       <Navbar></Navbar>
       <div className='container'>
       <h1> Top of Bar</h1>
+      <Post></Post>
       <Message state={this.state}></Message>
       </div>
       </div>
