@@ -18,6 +18,7 @@ class App extends Component {
   }
 
   postMessage(data){
+    console.log(data)
     Axios.post('http://localhost:8080/api/forum/messages', data)
          .then(response =>{
            console.log(response)

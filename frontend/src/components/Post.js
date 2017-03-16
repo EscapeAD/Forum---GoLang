@@ -16,8 +16,7 @@ class Post extends Component {
         message:  event.target.message.value
       }
     },()=>{
-      console.log(this.state)
-      console.log("push to main")
+      this.props.postMessage(this.state.newMessage)
     })
   }
 
