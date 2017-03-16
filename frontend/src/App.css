@@ -1,21 +1,26 @@
 .message-footer {
-  width: 100%;
   padding: 0.3em 1em;
+  width: 100%;
+  min-height: 3em;
   border: 1px solid black;
   color: black;
   font-size: 1.1em;
-  display: block;
   font-family: monospace;
+  position: relative;
 }
 .message-box {
   border: 1px solid black;
   padding: 1em;
+  min-height: 5em;
 }
 .user-details {
-  text-align: right;
-  padding-left: 1em;
+  padding: 0.2em 1em;
+  width: 60%;
 }
 
 ul {
   list-style-type: none;
+}
+.pull-right {
+  float: right;
 }
