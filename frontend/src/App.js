@@ -19,9 +19,9 @@ class App extends Component {
   getForum(){
     Axios.get('http://localhost:8080/api/forum')
          .then(response =>{
-           this.setState({messages: response.data.messages})
-           this.setState({comments: response.data.comments})
-           this.setState({replies:  response.data.replies})
+           this.setState({messages: response.data.Messages})
+           this.setState({comments: response.data.Comments})
+           this.setState({replies:  response.data.Replies})
          })
   }
 
@@ -35,7 +35,7 @@ class App extends Component {
       <Navbar></Navbar>
       <div className='container'>
       <h1> Top of Bar</h1>
-      <Message></Message>
+      <Message state={this.state}></Message>
       </div>
       </div>
     );
