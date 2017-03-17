@@ -7,7 +7,8 @@ class Post extends Component {
     super();
     this.state = {
       modal: false,
-      newMessage:{}
+      newMessage:{},
+      count: 0
     }
     this.toggle = this.toggle.bind(this);
   }
@@ -29,6 +30,12 @@ class Post extends Component {
       this.props.postMessage(this.state.newMessage)
     })
     this.forceUpdate()
+  }
+  
+  count(event){
+    this.setState({
+    count: event.target.value.length
+    })
   }
 
   render() {
@@ -56,8 +63,8 @@ class Post extends Component {
                  <Input type="text" name='username' id="username" placeholder="I am batman" required/>
                </FormGroup>
                <FormGroup>
-                 <Label for="message">Post</Label>
-                 <Input maxlength="250" type="textarea" name='messsage' id="message" required />
+                 <Label for="message">Post ({this.state.count}/250)</Label>
+                 <Input maxLength="250" onChange={this.count.bind(this)} type="textarea" name='messsage' id="message" required />
                </FormGroup>
         </ModalBody>
         <ModalFooter>

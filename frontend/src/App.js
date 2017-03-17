@@ -20,11 +20,20 @@ class App extends Component {
   postMessage(data){
     Axios.post('http://localhost:8080/api/forum/messages', JSON.stringify(data))
          .then(response =>{
-           console.log(response)
            this.getForum()
          })
          .catch(error=>{
-           console.log(error)
+           if (error.response) {
+                 // The request was made, but the server responded with a status code
+                 // that falls out of the range of 2xx
+                 console.log(error.response.data);
+                 console.log(error.response.status);
+                 console.log(error.response.headers);
+               } else {
+                 // Something happened in setting up the request that triggered an Error
+                 console.log('Error', error.message);
+               }
+               console.log(error.config);
          })
   }
 
@@ -32,24 +41,44 @@ class App extends Component {
     let address = data.comment_id ? 'http://localhost:8080/api/forum/messages/comments/replies' : 'http://localhost:8080/api/forum/messages/comments';
     Axios.post(address, JSON.stringify(data))
          .then(response =>{
-           console.log(response);
            this.getForum();
          })
          .catch(error=>{
-           console.log(error)
-         })
+           if (error.response) {
+                 // The request was made, but the server responded with a status code
+                 // that falls out of the range of 2xx
+                 console.log(error.response.data);
+                 console.log(error.response.status);
+                 console.log(error.response.headers);
+               } else {
+                 // Something happened in setting up the request that triggered an Error
+                 console.log('Error', error.message);
+               }
+               console.log(error.config);
+        })
   }
 
   getForum(){
     Axios.get('http://localhost:8080/api/forum')
          .then(response =>{
+           // Grab state from server
            this.setState({messages: response.data.Messages})
            this.setState({comments: response.data.Comments})
            this.setState({replies:  response.data.Replies})
          })
          .catch(error=>{
-           console.log(error)
-         })
+           if (error.response) {
+                 // The request was made, but the server responded with a status code
+                 // that falls out of the range of 2xx
+                 console.log(error.response.data);
+                 console.log(error.response.status);
+                 console.log(error.response.headers);
+               } else {
+                 // Something happened in setting up the request that triggered an Error
+                 console.log('Error', error.message);
+               }
+               console.log(error.config);
+        })
   }
 
   componentWillMount(){

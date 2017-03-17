@@ -20,9 +20,7 @@
 ul {
   list-style-type: none;
 }
-/*.pull-right {
-  float: right;
-}*/
+
 .left-div {
   order: 1;
   /* This will be twice as big as the small item. */
