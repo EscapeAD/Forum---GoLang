@@ -33,11 +33,11 @@ class App extends Component {
     Axios.post(address, JSON.stringify(data))
          .then(response =>{
            console.log(response);
+           this.getForum();
          })
          .catch(error=>{
            console.log(error)
          })
-         this.getForum();
   }
 
   getForum(){

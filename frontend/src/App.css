@@ -6,7 +6,7 @@
   color: black;
   font-size: 1.1em;
   font-family: monospace;
-  position: relative;
+  display: flex;
 }
 .message-box {
   border: 1px solid black;
@@ -15,12 +15,23 @@
 }
 .user-details {
   padding: 0.2em 1em;
-  width: 60%;
 }
 
 ul {
   list-style-type: none;
 }
-.pull-right {
+/*.pull-right {
   float: right;
-}
+}*/
+.left-div {
+  order: 1;
+  /* This will be twice as big as the small item. */
+  -webkit-flex: 2 0 0;
+  flex: 2 0 0;
+ }
+.right-div {
+  -webkit-flex: 1 0 0;
+  flex: 1 0 0;
+  text-align: right;
+  order: 2;
+ }
