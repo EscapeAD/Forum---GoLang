@@ -3,8 +3,6 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -17,7 +15,7 @@ var db *sql.DB
 func init() {
 	// initate DB
 	var err error
-	db, err = sql.Open("postgres", "postgres://fowner:pass0@localhost/forum?sslmode=disable")
+	db, err = sql.Open("postgres", "postgres://fowner:pass0@mydbinstance.cgo6tsraac1p.us-west-2.rds.amazonaws.com:5432/mydb?sslmode=disable")
 	if err != nil {
 		panic(err)
 	}
@@ -25,7 +23,7 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("connected to Database")
+	log.Println("connected to Database")
 }
 
 type message struct {
@@ -56,7 +54,8 @@ type post struct {
 }
 
 func main() {
-	http.HandleFunc("/", home)
+	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("./frontend/build"))))
+	// http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.HandleFunc("/api/forum", forum)
 	http.HandleFunc("/api/forum/messages", fp)
 	http.HandleFunc("/api/forum/messages/comments", cp)
@@ -64,10 +63,6 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
-func home(w http.ResponseWriter, req *http.Request) {
-	// Set template here for index or seperate?
-	io.WriteString(w, "Home")
-}
 func forum(w http.ResponseWriter, req *http.Request) {
 	replies := make([]reply, 0)
 	messages := make([]message, 0)
