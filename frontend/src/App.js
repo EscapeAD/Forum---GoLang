@@ -20,7 +20,7 @@ class App extends Component {
   }
 
   postMessage(data){
-    Axios.post('http://localhost:8080/api/forum/messages', JSON.stringify(data))
+    Axios.post('/api/forum/messages', JSON.stringify(data))
          .then(response =>{
            // Grab state from server
            this.getForum()
@@ -41,7 +41,7 @@ class App extends Component {
   }
 
   postResponse(data){
-    let address = data.comment_id ? 'http://localhost:8080/api/forum/messages/comments/replies' : 'http://localhost:8080/api/forum/messages/comments';
+    let address = data.comment_id ? '/api/forum/messages/comments/replies' : '/api/forum/messages/comments';
     Axios.post(address, JSON.stringify(data))
          .then(response =>{
            // Grab state from server
@@ -63,7 +63,7 @@ class App extends Component {
   }
 
   getForum(){
-    Axios.get('http://localhost:8080/api/forum')
+    Axios.get('/api/forum')
          .then(response =>{
            // Grab state from server
            this.setState({messages: response.data.Messages})
