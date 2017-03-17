@@ -76,4 +76,8 @@ class Respond extends Component {
   }
 }
 
+Respond.propTypes = {
+  postResponse: React.PropTypes.func,
+}
+
 export default Respond;

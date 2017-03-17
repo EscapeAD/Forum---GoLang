@@ -19,4 +19,9 @@ class Comment extends Component {
   }
 }
 
+Comment.propTypes = {
+  state: React.PropTypes.object,
+  postResponse: React.PropTypes.func,
+}
+
 export default Comment;

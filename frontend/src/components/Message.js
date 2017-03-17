@@ -20,4 +20,9 @@ class Message extends Component {
   }
 }
 
+  Message.propTypes = {
+    state: React.PropTypes.object,
+    postResponse: React.PropTypes.func,
+  }
+
 export default Message;

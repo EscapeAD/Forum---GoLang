@@ -16,4 +16,8 @@ class Reply extends Component {
   }
 }
 
+Reply.propTypes = {
+  state: React.PropTypes.object,
+}
+
 export default Reply;

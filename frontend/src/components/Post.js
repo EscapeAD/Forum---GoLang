@@ -31,7 +31,7 @@ class Post extends Component {
     })
     this.forceUpdate()
   }
-  
+
   count(event){
     this.setState({
     count: event.target.value.length
@@ -76,6 +76,10 @@ class Post extends Component {
       </div>
     );
   }
+}
+
+Post.propTypes = {
+  postMessage: React.PropTypes.func,
 }
 
 export default Post;
