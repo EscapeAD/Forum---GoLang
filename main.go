@@ -74,7 +74,6 @@ func forum(w http.ResponseWriter, req *http.Request) {
 	comments := make([]comment, 0)
 	// response json
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	// Pull data from DB
 	rows, err := db.Query("SELECT * from messages")
 	if err != nil {
@@ -163,7 +162,6 @@ func fp(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.WriteHeader(http.StatusCreated)
 }
 func cp(w http.ResponseWriter, req *http.Request) {
@@ -197,7 +195,6 @@ func cp(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.WriteHeader(http.StatusCreated)
 }
 func rp(w http.ResponseWriter, req *http.Request) {
@@ -232,6 +229,5 @@ func rp(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.WriteHeader(http.StatusCreated)
 }
