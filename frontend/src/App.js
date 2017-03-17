@@ -15,6 +15,9 @@ class App extends Component {
       comments: [],
       replies:  []
     }
+    this.postMessage = this.postMessage.bind(this)
+    this.postResponse = this.postResponse.bind(this)
+    this.getForum = this.getForum.bind(this)
   }
 
   postMessage(data){

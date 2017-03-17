@@ -9,7 +9,10 @@ class Respond extends Component {
     newMessage: {},
     count: 0
   };
-  this.toggle = this.toggle.bind(this);
+  this.toggle       = this.toggle.bind(this)
+  this.handleSubmit = this.handleSubmit.bind(this)
+  this.count        = this.count.bind(this)
+
   }
 
   toggle() {
