@@ -29,7 +29,7 @@ class Post extends Component {
     },()=>{
       this.props.postMessage(this.state.newMessage)
     })
-    this.forceUpdate()
+    this.toggle()
   }
 
   count(event){
