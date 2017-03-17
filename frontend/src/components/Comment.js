@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Reply                from './Reply';
 import Respond              from './Respond';
 
-
 class Comment extends Component {
   render() {
     let comments = this.props.state.comments.map((comment)=>{

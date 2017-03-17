@@ -16,11 +16,9 @@
 .user-details {
   padding: 0.2em 1em;
 }
-
 ul {
   list-style-type: none;
 }
-
 .left-div {
   order: 1;
   /* This will be twice as big as the small item. */

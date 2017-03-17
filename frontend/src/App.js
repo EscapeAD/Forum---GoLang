@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
 class App extends Component {
-
   constructor(){
     super()
     this.state = {
@@ -23,6 +22,7 @@ class App extends Component {
   postMessage(data){
     Axios.post('http://localhost:8080/api/forum/messages', JSON.stringify(data))
          .then(response =>{
+           // Grab state from server
            this.getForum()
          })
          .catch(error=>{
@@ -44,6 +44,7 @@ class App extends Component {
     let address = data.comment_id ? 'http://localhost:8080/api/forum/messages/comments/replies' : 'http://localhost:8080/api/forum/messages/comments';
     Axios.post(address, JSON.stringify(data))
          .then(response =>{
+           // Grab state from server
            this.getForum();
          })
          .catch(error=>{

@@ -12,10 +12,10 @@ class Respond extends Component {
   this.toggle       = this.toggle.bind(this)
   this.handleSubmit = this.handleSubmit.bind(this)
   this.count        = this.count.bind(this)
-
   }
 
   toggle() {
+    // modal toggle
     this.setState({
       modal: !this.state.modal
     });
@@ -38,8 +38,9 @@ class Respond extends Component {
         comment_id: this.props.comment_id
       }
     }
+    // Set struc on check
     let state = this.props.comment_id ? reply : comment
-
+    // send to postResponse => toggle modal off
     this.setState(state,()=>{
       this.props.postResponse(this.state.newMessage)
       this.toggle()
@@ -47,6 +48,7 @@ class Respond extends Component {
   }
 
   count(event){
+    // Counts the number of chars in the textarea
     this.setState({
     count: event.target.value.length
     })

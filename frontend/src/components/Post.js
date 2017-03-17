@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Jumbotron, Form, FormGroup, Label, Input } from 'reactstrap';
 
-
 class Post extends Component {
   constructor(){
     super();
@@ -10,10 +9,13 @@ class Post extends Component {
       newMessage:{},
       count: 0
     }
-    this.toggle = this.toggle.bind(this);
+    this.toggle       = this.toggle.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.count        = this.count.bind(this)
   }
 
   toggle() {
+    // modal toggle
     this.setState({
       modal: !this.state.modal
     });
@@ -28,11 +30,12 @@ class Post extends Component {
       }
     },()=>{
       this.props.postMessage(this.state.newMessage)
+      this.toggle()
     })
-    this.toggle()
   }
 
   count(event){
+    // Counts the number of chars in the textarea
     this.setState({
     count: event.target.value.length
     })
