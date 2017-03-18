@@ -42,8 +42,14 @@ CREATE TABLE replies (
 );
 ```
 
+
 Minor notes:
+must grant user PRIVILEGES.
 ```
-GRANT ALL PRIVILEGES ON replies TO fowner;
-GRANT ALL ON SEQUENCE comments_id_seq TO fowner;
+GRANT ALL PRIVILEGES ON DATABASE <dbname> TO <user>;
+GRANT ALL PRIVILEGES ON TABLE <tablename> TO <user>;
+GRANT ALL ON SEQUENCE <table_id_seq> TO <user>;
+grant all on sequence <table_id_seq> to <user>;
+ex)
+grant all on sequence user_id_seq to myuser
 ```

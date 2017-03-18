@@ -15,12 +15,14 @@ var db *sql.DB
 func init() {
 	// initate DB
 	var err error
-	db, err = sql.Open("postgres", "postgres://fowner:pass0@mydbinstance.cgo6tsraac1p.us-west-2.rds.amazonaws.com:5432/mydb?sslmode=disable")
+	db, err = sql.Open("postgres", "user=fowner password=pass0 host=mydbinstance.cgo6tsraac1p.us-west-2.rds.amazonaws.com port=5432 sslmode=disable dbname=mydb")
 	if err != nil {
+		log.Println(err)
 		panic(err)
 	}
 	err = db.Ping()
 	if err != nil {
+		log.Println(err)
 		panic(err)
 	}
 	log.Println("connected to Database")
@@ -54,13 +56,13 @@ type post struct {
 }
 
 func main() {
-	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("./frontend/build"))))
+	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("./assets"))))
 	// http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.HandleFunc("/api/forum", forum)
 	http.HandleFunc("/api/forum/messages", fp)
 	http.HandleFunc("/api/forum/messages/comments", cp)
 	http.HandleFunc("/api/forum/messages/comments/replies", rp)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":80", nil)
 }
 
 func forum(w http.ResponseWriter, req *http.Request) {

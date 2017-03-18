@@ -15,12 +15,14 @@ var db *sql.DB
 func init() {
 	// initate DB
 	var err error
-	db, err = sql.Open("postgres", "postgres://fowner:pass0@mydbinstance.cgo6tsraac1p.us-west-2.rds.amazonaws.com:5432/mydb?sslmode=disable")
+	db, err = sql.Open("postgres", "user=fowner password=pass0 host=mydbinstance.cgo6tsraac1p.us-west-2.rds.amazonaws.com port=5432 sslmode=disable dbname=mydb")
 	if err != nil {
+		log.Println(err)
 		panic(err)
 	}
 	err = db.Ping()
 	if err != nil {
+		log.Println(err)
 		panic(err)
 	}
 	log.Println("connected to Database")
